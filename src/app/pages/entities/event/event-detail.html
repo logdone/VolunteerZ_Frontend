@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Event
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">Title</ion-label>
+      <div item-content>
+        <span>{{event.title}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Event Description</ion-label>
+      <div item-content>
+        <span>{{event.eventDescription}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Event Image</ion-label>
+      <div item-content>
+        <span>{{event.eventImage}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Category</ion-label>
+      <div item-content>
+        <span>{{event.category}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Creation Date</ion-label>
+      <div item-content>
+        <span>{{event.creationDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Event Date</ion-label>
+      <div item-content>
+        <span>{{event.eventDate | date:'medium'}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Max Number Volunteers</ion-label>
+      <div item-content>
+        <span>{{event.maxNumberVolunteers}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Nbr Reports</ion-label>
+      <div item-content>
+        <span>{{event.nbrReports}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Link</ion-label>
+      <div item-content>
+        <span>{{event.link}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Location</ion-label>
+      <div item-content>
+        <span>{{event.location}}</span>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>Owner</ion-label>
+      <div item-content>{{event.owner?.login}}</div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="primary" (click)="open(event)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+  <ion-button expand="block" color="danger" (click)="deleteModal(event)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+</ion-content>

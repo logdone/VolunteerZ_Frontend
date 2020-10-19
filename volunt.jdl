@@ -1,0 +1,50 @@
+
+entity Event {
+    title String required unique,
+    eventDescription String maxlength(200),
+    eventImage String,
+    category String ,
+    creationDate ZonedDateTime required,
+    eventDate ZonedDateTime required,
+    maxNumberVolunteers Integer min(0),
+    nbrReports Integer,
+    link String,
+    location String required,
+    
+}
+
+entity ExtendedUser {
+}
+
+entity Comment {
+    commentBody String required maxlength(200),
+}
+
+entity Reaction {
+	id Integer required unique,
+}
+
+
+relationship ManyToOne {
+	Event{owner} to ExtendedUser,
+}
+
+// defining multiple oneToOne relationships
+relationship OneToMany {
+    Event to Comment,
+    Event to Reaction,
+    Event{participants} to ExtendedUser,
+    ExtendedUser to Comment,
+    ExtendedUser to Reaction,
+}
+
+// Set pagination options
+paginate Comment, Event, ExtendedUser , Reaction with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

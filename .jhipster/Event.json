@@ -1,0 +1,94 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "participants"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "event",
+      "relationshipName": "owner",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    },
+    {
+      "fieldName": "eventDescription",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "eventImage",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "category",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "creationDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "eventDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "maxNumberVolunteers",
+      "fieldType": "Integer",
+      "fieldValidateRules": [
+        "min"
+      ],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "nbrReports",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "link",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "changelogDate": "20201019134206",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "no",
+  "entityTableName": "event",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "no",
+  "name": "Event",
+  "embedded": false,
+  "applications": "*"
+}

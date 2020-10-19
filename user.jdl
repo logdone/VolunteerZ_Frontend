@@ -1,0 +1,39 @@
+
+
+entity Event {
+    title String required unique,
+    eventDescription String maxlength(200),
+    eventImage String,
+    category String ,
+    creationDate ZonedDateTime required,
+    eventDate ZonedDateTime required,
+    maxNumberVolunteers Integer min(0),
+    nbrReports Integer,
+    link String,
+    location String required,
+    
+}
+
+entity User {
+}
+
+
+relationship ManyToOne {
+	Event{owner} to User,
+}
+
+// defining multiple oneToOne relationships
+relationship OneToMany {
+    Event{participants} to User,
+
+}
+
+// Set pagination options
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

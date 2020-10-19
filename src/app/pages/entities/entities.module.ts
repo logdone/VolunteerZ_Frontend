@@ -16,6 +16,22 @@ const routes: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: 'event',
+    loadChildren: './event/event.module#EventPageModule',
+  },
+  {
+    path: 'extended-user',
+    loadChildren: './extended-user/extended-user.module#ExtendedUserPageModule',
+  },
+  {
+    path: 'comment',
+    loadChildren: './comment/comment.module#CommentPageModule',
+  },
+  {
+    path: 'reaction',
+    loadChildren: './reaction/reaction.module#ReactionPageModule',
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

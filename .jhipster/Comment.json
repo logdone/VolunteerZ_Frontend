@@ -1,0 +1,43 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "comment",
+      "relationshipName": "event",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "extendedUser",
+      "otherEntityRelationshipName": "comment",
+      "relationshipName": "extendedUser",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "commentBody",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "maxlength"
+      ],
+      "fieldValidateRulesMaxlength": "200"
+    }
+  ],
+  "changelogDate": "20201019134356",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "no",
+  "entityTableName": "comment",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination",
+  "name": "Comment",
+  "embedded": false,
+  "applications": "*"
+}
