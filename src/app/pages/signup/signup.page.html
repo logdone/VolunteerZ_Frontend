@@ -21,6 +21,16 @@
       </ion-item>
 
       <ion-item>
+        <ion-label position="floating">{{ 'USERNAME' | translate }}</ion-label>
+        <ion-input type="string" [(ngModel)]="account.login" name="login"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Image</ion-label>
+        <ion-input type="string" [(ngModel)]="account.imageUrl" name="login"></ion-input>
+      </ion-item>
+
+      <ion-item>
         <ion-label position="floating">{{ 'EMAIL' | translate }}</ion-label>
         <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
       </ion-item>

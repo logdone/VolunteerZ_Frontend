@@ -26,6 +26,15 @@ const routes: Routes = [
         ],
       },
       {
+        path: 'timeline',
+        children: [
+          {
+            path: '',
+            loadChildren: '../timeline/timeline.module#TimelinePageModule',
+          },
+        ],
+      },
+      {
         path: 'account',
         children: [
           {

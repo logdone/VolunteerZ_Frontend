@@ -50,7 +50,7 @@ export class SignupPage implements OnInit {
 
   doSignup() {
     // set login to same as email
-    this.account.login = this.account.email;
+    // this.account.login = this.account.email;
     // Attempt to login in through our User service
     this.userService.signup(this.account).subscribe(
       async () => {

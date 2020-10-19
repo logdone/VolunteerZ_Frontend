@@ -6,4 +6,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ng-container *ngIf="account">
+    
+  <ion-item>
+    <ion-avatar slot="end">
+        <img src="{{account.imageUrl}}">
+    </ion-avatar>
+    <ion-label class="ion-text-capitalize">{{account.login}}</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-note class="ion-margin">First Name</ion-note>
+      {{account.firstName}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-note class="ion-margin">Last Name</ion-note>
+      {{account.lastName}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <ion-note class="ion-margin">Email</ion-note>
+      {{account.email}}
+    </ion-label>
+  </ion-item>
+
+</ng-container>
+</ion-content>
