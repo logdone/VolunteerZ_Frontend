@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TabsPage } from './tabs.page';
 import { TabsPageRoutingModule } from './tabs.router.module';
 
+
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, TabsPageRoutingModule, TranslateModule],
   declarations: [TabsPage],
