@@ -10,21 +10,19 @@
       "otherEntityField": "id"
     },
     {
+      "relationshipName": "user",
+      "otherEntityName": "user",
       "relationshipType": "many-to-one",
-      "otherEntityName": "extendedUser",
-      "otherEntityRelationshipName": "comment",
-      "relationshipName": "extendedUser",
-      "otherEntityField": "id"
+      "otherEntityField": "login",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "comment"
     }
   ],
   "fields": [
     {
       "fieldName": "commentBody",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "200"
     }
   ],

@@ -7,14 +7,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactionPage } from './reaction';
 
 describe('ReactionPage', () => {
-  let component: ReactionPage;
+  let component: ReactionPage ;
   let fixture: ComponentFixture<ReactionPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ReactionPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), HttpClientTestingModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     }).compileComponents();
   }));
 
@@ -28,3 +33,4 @@ describe('ReactionPage', () => {
     expect(component).toBeTruthy();
   });
 });
+

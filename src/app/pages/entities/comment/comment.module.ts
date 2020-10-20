@@ -30,51 +30,63 @@ export class CommentResolve implements Resolve<Comment> {
 }
 
 const routes: Routes = [
-  {
-    path: '',
-    component: CommentPage,
-    data: {
-      authorities: ['ROLE_USER'],
+    {
+      path: '',
+      component: CommentPage,
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: CommentUpdatePage,
-    resolve: {
-      data: CommentResolve,
+    {
+      path: 'new',
+      component: CommentUpdatePage,
+      resolve: {
+        data: CommentResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    data: {
-      authorities: ['ROLE_USER'],
+    {
+      path: ':id/view',
+      component: CommentDetailPage,
+      resolve: {
+        data: CommentResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: CommentDetailPage,
-    resolve: {
-      data: CommentResolve,
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: CommentUpdatePage,
-    resolve: {
-      data: CommentResolve,
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-    },
-    canActivate: [UserRouteAccessService],
-  },
-];
+    {
+      path: ':id/edit',
+      component: CommentUpdatePage,
+      resolve: {
+        data: CommentResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    }
+  ];
 
 @NgModule({
-  declarations: [CommentPage, CommentUpdatePage, CommentDetailPage],
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule, TranslateModule, RouterModule.forChild(routes)],
+    declarations: [
+        CommentPage,
+        CommentUpdatePage,
+        CommentDetailPage
+    ],
+    imports: [
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule,
+        RouterModule.forChild(routes)
+    ]
 })
-export class CommentPageModule {}
+export class CommentPageModule {
+}

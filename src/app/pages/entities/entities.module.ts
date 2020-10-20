@@ -21,10 +21,6 @@ const routes: Routes = [
     loadChildren: './event/event.module#EventPageModule',
   },
   {
-    path: 'extended-user',
-    loadChildren: './extended-user/extended-user.module#ExtendedUserPageModule',
-  },
-  {
     path: 'comment',
     loadChildren: './comment/comment.module#CommentPageModule',
   },

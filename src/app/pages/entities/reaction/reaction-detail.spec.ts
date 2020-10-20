@@ -9,11 +9,11 @@ import { of } from 'rxjs';
 import { ReactionDetailPage } from './reaction-detail';
 
 describe('ReactionDetailPage', () => {
-  let component: ReactionDetailPage;
+  let component: ReactionDetailPage ;
   let fixture: ComponentFixture<ReactionDetailPage>;
-  const entityMock = {
+  const entityMock =  {
     id: 0,
-    user: {},
+    user: {}
   };
 
   const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
@@ -22,8 +22,15 @@ describe('ReactionDetailPage', () => {
     TestBed.configureTestingModule({
       declarations: [ReactionDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), HttpClientTestingModule, RouterTestingModule],
-      providers: [{ provide: ActivatedRoute, useValue: activatedRouteMock }],
+      imports: [
+        TranslateModule.forRoot(),
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
+      ]
     }).compileComponents();
   }));
 
@@ -37,3 +44,4 @@ describe('ReactionDetailPage', () => {
     expect(component.reaction).toEqual(entityMock);
   });
 });
+

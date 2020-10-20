@@ -11,20 +11,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user/user.service';
 import { CommentUpdatePage } from './comment-update';
 
+
 describe('CommentUpdatePage', () => {
-  let component: CommentUpdatePage;
+  let component: CommentUpdatePage ;
   let fixture: ComponentFixture<CommentUpdatePage>;
 
-  const entityMock = {
-    id: 0,
-    user: {},
+ const entityMock =  {
+  id: 0,
+  user: {}
   };
 
-  const userServiceMock = {
-    findAll: (): any => of([]),
-  };
+const userServiceMock = {
+  findAll: (): any => of([])
+};
 
-  const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
+const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,14 +36,11 @@ describe('CommentUpdatePage', () => {
         NgxWebstorageModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        IonicModule,
-      ],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: UserService, useValue: userServiceMock },
-      ],
+        FormsModule, ReactiveFormsModule, IonicModule ],
+        providers: [
+         { provide: ActivatedRoute, useValue: activatedRouteMock },
+         { provide: UserService, useValue:  userServiceMock },
+       ]
     }).compileComponents();
   }));
 
@@ -56,3 +54,4 @@ describe('CommentUpdatePage', () => {
     expect(component.comment).toEqual(entityMock);
   });
 });
+

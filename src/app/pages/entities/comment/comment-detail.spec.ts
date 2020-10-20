@@ -9,11 +9,11 @@ import { of } from 'rxjs';
 import { CommentDetailPage } from './comment-detail';
 
 describe('CommentDetailPage', () => {
-  let component: CommentDetailPage;
+  let component: CommentDetailPage ;
   let fixture: ComponentFixture<CommentDetailPage>;
-  const entityMock = {
+  const entityMock =  {
     id: 0,
-    user: {},
+    user: {}
   };
 
   const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
@@ -22,8 +22,15 @@ describe('CommentDetailPage', () => {
     TestBed.configureTestingModule({
       declarations: [CommentDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), HttpClientTestingModule, RouterTestingModule],
-      providers: [{ provide: ActivatedRoute, useValue: activatedRouteMock }],
+      imports: [
+        TranslateModule.forRoot(),
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
+      ]
     }).compileComponents();
   }));
 
@@ -37,3 +44,4 @@ describe('CommentDetailPage', () => {
     expect(component.comment).toEqual(entityMock);
   });
 });
+

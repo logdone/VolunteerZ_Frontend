@@ -14,7 +14,22 @@
 
 <ion-content class="ion-padding">
   <p>{{ 'WELCOME_INTRO' | translate }}</p>
+  <ion-list>
+    <ion-list-header>
+      Near by events
+    </ion-list-header>
 
-  <span class="hipster"></span>
+    <ion-item *ngFor="let event of events; trackBy: trackId" #slidingItem>
+      <ion-avatar slot="start">
+        <img src="{{event.eventImage}}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{event.title}}</h2>
+        <h3>{{event.eventDate}}</h3>
+        <p>{{event.eventDescription}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
 <!-- test commit-->

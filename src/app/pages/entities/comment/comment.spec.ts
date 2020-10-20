@@ -7,14 +7,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommentPage } from './comment';
 
 describe('CommentPage', () => {
-  let component: CommentPage;
+  let component: CommentPage ;
   let fixture: ComponentFixture<CommentPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CommentPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), HttpClientTestingModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     }).compileComponents();
   }));
 
@@ -28,3 +33,4 @@ describe('CommentPage', () => {
     expect(component).toBeTruthy();
   });
 });
+

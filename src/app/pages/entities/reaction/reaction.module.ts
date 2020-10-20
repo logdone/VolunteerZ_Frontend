@@ -30,51 +30,63 @@ export class ReactionResolve implements Resolve<Reaction> {
 }
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ReactionPage,
-    data: {
-      authorities: ['ROLE_USER'],
+    {
+      path: '',
+      component: ReactionPage,
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: ReactionUpdatePage,
-    resolve: {
-      data: ReactionResolve,
+    {
+      path: 'new',
+      component: ReactionUpdatePage,
+      resolve: {
+        data: ReactionResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    data: {
-      authorities: ['ROLE_USER'],
+    {
+      path: ':id/view',
+      component: ReactionDetailPage,
+      resolve: {
+        data: ReactionResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: ReactionDetailPage,
-    resolve: {
-      data: ReactionResolve,
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: ReactionUpdatePage,
-    resolve: {
-      data: ReactionResolve,
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-    },
-    canActivate: [UserRouteAccessService],
-  },
-];
+    {
+      path: ':id/edit',
+      component: ReactionUpdatePage,
+      resolve: {
+        data: ReactionResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    }
+  ];
 
 @NgModule({
-  declarations: [ReactionPage, ReactionUpdatePage, ReactionDetailPage],
-  imports: [IonicModule, FormsModule, ReactiveFormsModule, CommonModule, TranslateModule, RouterModule.forChild(routes)],
+    declarations: [
+        ReactionPage,
+        ReactionUpdatePage,
+        ReactionDetailPage
+    ],
+    imports: [
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule,
+        RouterModule.forChild(routes)
+    ]
 })
-export class ReactionPageModule {}
+export class ReactionPageModule {
+}

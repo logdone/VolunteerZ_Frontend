@@ -5,48 +5,49 @@ import { NavController, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'page-comment-detail',
-  templateUrl: 'comment-detail.html',
+    selector: 'page-comment-detail',
+    templateUrl: 'comment-detail.html'
 })
 export class CommentDetailPage implements OnInit {
-  comment: Comment = {};
+    comment: Comment = {};
 
-  constructor(
-    private navController: NavController,
-    private commentService: CommentService,
-    private activatedRoute: ActivatedRoute,
-    private alertController: AlertController
-  ) {}
+    constructor(
+        private navController: NavController,
+        private commentService: CommentService,
+        private activatedRoute: ActivatedRoute,
+        private alertController: AlertController
+    ) { }
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe((response) => {
-      this.comment = response.data;
-    });
-  }
+    ngOnInit(): void {
+        this.activatedRoute.data.subscribe((response) => {
+            this.comment = response.data;
+        });
+    }
 
-  open(item: Comment) {
-    this.navController.navigateForward('/tabs/entities/comment/' + item.id + '/edit');
-  }
+    open(item: Comment) {
+        this.navController.navigateForward('/tabs/entities/comment/' + item.id + '/edit');
+    }
 
-  async deleteModal(item: Comment) {
-    const alert = await this.alertController.create({
-      header: 'Confirm the deletion?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-        },
-        {
-          text: 'Delete',
-          handler: () => {
-            this.commentService.delete(item.id).subscribe(() => {
-              this.navController.navigateForward('/tabs/entities/comment');
-            });
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
+    async deleteModal(item: Comment) {
+        const alert = await this.alertController.create({
+            header: 'Confirm the deletion?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary'
+                }, {
+                    text: 'Delete',
+                    handler: () => {
+                        this.commentService.delete(item.id).subscribe(() => {
+                            this.navController.navigateForward('/tabs/entities/comment');
+                        });
+                    }
+                }
+            ]
+        });
+        await alert.present();
+    }
+
+
 }

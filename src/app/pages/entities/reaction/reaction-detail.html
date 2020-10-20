@@ -1,30 +1,29 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Reaction
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            Reaction
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list>
-    <ion-item>
-      <ion-label>Event</ion-label>
-      <div item-content *ngIf="reaction.event">
-        <a>{{reaction.event?.id}}</a>
-      </div>
-    </ion-item>
-    <ion-item>
-      <ion-label>Extended User</ion-label>
-      <div item-content *ngIf="reaction.extendedUser">
-        <a>{{reaction.extendedUser?.id}}</a>
-      </div>
-    </ion-item>
-  </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-label>Event</ion-label>
+            <div item-content *ngIf="reaction.event">
+                <a>{{reaction.event?.id}}</a>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label>User</ion-label>
+            <div item-content>{{reaction.user?.login}}</div>
+        </ion-item>
+    </ion-list>
 
-  <ion-button expand="block" color="primary" (click)="open(reaction)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
-  <ion-button expand="block" color="danger" (click)="deleteModal(reaction)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="primary" (click)="open(reaction)">{{ 'EDIT_BUTTON' | translate }}</ion-button>
+    <ion-button expand="block" color="danger" (click)="deleteModal(reaction)">{{ 'DELETE_BUTTON' | translate }}</ion-button>
+
 </ion-content>
