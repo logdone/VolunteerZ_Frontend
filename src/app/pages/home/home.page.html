@@ -32,7 +32,7 @@
   </ion-list> -->
 
   <ion-card *ngFor="let event of events; trackBy: trackId" button="true">
-    <div (click)="navigateToEvent()">
+    <div (click)="navigateToEvent(event.id)">
       <img src="{{event.eventImage}}" />
       <ion-card-header>
         <ion-card-title>{{event.title}}</ion-card-title>
