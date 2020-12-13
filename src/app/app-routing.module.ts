@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { EventContentPage } from './pages/entities/event/event-content/event-content.page';
+import { EventResolve } from './pages/entities/event/event.module';
 
 const routes: Routes = [
   { path: '', loadChildren: './pages/welcome/welcome.module#WelcomePageModule' },
@@ -9,7 +10,10 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
   { path: 'accessdenied', redirectTo: '', pathMatch: 'full' },
   {
-    path: 'event-content',
+    path: 'event-content/:id',
+    resolve: {
+      data: EventResolve,
+    },
     component: EventContentPage
   },
 
