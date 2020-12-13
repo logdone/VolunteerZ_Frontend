@@ -23,10 +23,14 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.accountService.identity().then((account) => {
+              console.log("not logged in ");
+
       if (account === null) {
+        console.log("not logged in ");
         this.goBackToHomePage();
       } else {
         this.account = account;
+        console.log(account);
       }
     });
   }

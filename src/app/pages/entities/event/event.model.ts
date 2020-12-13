@@ -14,7 +14,7 @@ export class Event implements BaseEntity {
     public nbrReports?: number,
     public link?: string,
     public location?: string,
-    public participants?: User[],
+    public participants?: any[],
     public owner?: User
   ) {}
 }

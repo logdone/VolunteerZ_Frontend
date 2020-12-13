@@ -25,16 +25,19 @@ export class EventContentPage implements OnInit {
     console.log("in init");
     this.activatedRoute.data.subscribe((response) => {
       this.event = response.data;
-      console.log(this.event.participants[0].id);
+      console.log(this.event);
     });
     this.accountService.identity().then((account) => {
+      console.log("in identity");
+
       if (account === null) {
-        this.goBackToHomePage();
+      console.log("not logged in ");
+      this.goBackToHomePage();
       } else {
-        this.account = account;
-        console.log("this account name "+this.account.name);
+      this.account = account;
+      console.log(this.account);
       }
-    });
+});
 
   }
 
