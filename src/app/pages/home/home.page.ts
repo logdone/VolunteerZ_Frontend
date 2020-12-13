@@ -32,7 +32,7 @@ export class HomePage implements OnInit {
   }
 
   navigateToEvent(){
-    this.goBackToHomePage();
+    this.navController.navigateForward('/tabs/timeline');
   }
 
   isAuthenticated() {
