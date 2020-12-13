@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-item>
-      <ion-icon slot="start" name="arrow-back-outline" (click)="navigateBack()"></ion-icon>
-      <ion-title>Event Name</ion-title>
+      <ion-icon slot="start" name="arrow-back-outline" (click)="goBack()"></ion-icon>
+      <ion-title>{{event.title}}</ion-title>
     </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <img src="https://www.ledgerinsights.com/wp-content/uploads/2019/09/charity-810x476.jpg" />
+  <img src="{{event.eventImage}}" />
   <ion-item-divider>
     Comments
   </ion-item-divider>

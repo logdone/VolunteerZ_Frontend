@@ -26,6 +26,8 @@ export class EventContentPage implements OnInit {
     });
   }
 
-  
+  goBack(){
+    this.navController.back();
+  }
 
 }
