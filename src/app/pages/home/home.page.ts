@@ -1,5 +1,5 @@
 import { Component, DebugElement, OnInit } from '@angular/core';
-import { NavController,ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Account } from 'src/model/account.model';
@@ -7,6 +7,7 @@ import { EventService } from 'src/app/pages/entities/event/event.service';
 import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import { Event } from 'src/app/pages/entities/event/event.model';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-home',
@@ -17,13 +18,13 @@ export class HomePage implements OnInit {
   account: Account;
   events: Event[];
 
-  constructor(private toastCtrl: ToastController,private eventService: EventService,public navController: NavController, private accountService: AccountService, private loginService: LoginService) {
+  constructor(private _clipboardService: ClipboardService, private toastCtrl: ToastController, private eventService: EventService, public navController: NavController, private accountService: AccountService, private loginService: LoginService) {
     this.events = [];
   }
 
   ngOnInit() {
     this.accountService.identity().then((account) => {
-              console.log("not logged in ");
+      console.log("not logged in ");
 
       if (account === null) {
         console.log("not logged in ");
@@ -35,8 +36,23 @@ export class HomePage implements OnInit {
     });
   }
 
-  navigateToEvent(id:number){
-    this.navController.navigateForward('/event-content/'+id);
+  navigateToEvent(id: number) {
+    this.navController.navigateForward('/event-content/' + id);
+  }
+
+  copyEventLocation(id: number) {
+    console.log(location.origin + '/event-content/' + id);
+    this._clipboardService.copy(location.origin + '/event-content/' + id);
+    this.presentToast();
+  }
+
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Event Link Copied to Clipboard',
+      duration: 1000,
+      position: 'middle'
+    });
+    toast.present();
   }
 
   isAuthenticated() {
@@ -56,11 +72,11 @@ export class HomePage implements OnInit {
     this.loadAll();
   }
 
-  participate(id : number){
+  participate(id: number) {
     console.log("In participate");
-    this.eventService.participate(id,this.account.login).subscribe(
+    this.eventService.participate(id, this.account.login).subscribe(
       (response) => {
-        console.log("event with id "+response.body.title);
+        console.log("event with id " + response.body.title);
       }
 
 
