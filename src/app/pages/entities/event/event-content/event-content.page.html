@@ -1,9 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>event-content</ion-title>
+    <ion-item>
+      <ion-icon slot="start" name="arrow-back-outline" (click)="navigateBack()"></ion-icon>
+      <ion-title>Event Name</ion-title>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <img src="https://www.ledgerinsights.com/wp-content/uploads/2019/09/charity-810x476.jpg" />
+  <ion-item-divider>
+    Comments
+  </ion-item-divider>
+  <ion-list>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="">
+      </ion-avatar>
+      <ion-label position="floating">Write a Comment</ion-label>
+      <ion-textarea></ion-textarea>
+      <ion-icon class="send_comment" slot="end" name="send-outline"></ion-icon>
+    </ion-item>
+    <ion-item-divider></ion-item-divider>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="">
+        </ion-avatar>
+        <ion-label>
+          <h3>Lorem ipsum</h3>
+          <ion-text color="dark">
+            <h5>H5: The quick brown fox jumps over the lazy dog</h5>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="reportComment()">Report<ion-icon name="alert-circle-outline">
+          </ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
