@@ -22,6 +22,7 @@ export class EventContentPage implements OnInit {
     private accountService: AccountService,
     private alertController: AlertController) 
     { }
+    
 
   ngOnInit() {
     console.log("in init");
@@ -29,7 +30,7 @@ export class EventContentPage implements OnInit {
       this.event = response.data;
       console.log(this.event);
       this.comments = this.event.comments;
-      console.log("comments "+this.comments);
+      console.log("comments "+this.comments[0].commentBody);
       
     });
     this.accountService.identity().then((account) => {
