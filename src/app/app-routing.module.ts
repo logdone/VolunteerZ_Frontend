@@ -6,12 +6,7 @@ const routes: Routes = [
   { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
-  { path: 'accessdenied', redirectTo: '', pathMatch: 'full' },  {
-    path: 'event-content',
-    loadChildren: () => import('./pages/entities/event/event-content/event-content.module').then( m => m.EventContentPageModule)
-  },
-
-
+  { path: 'accessdenied', redirectTo: '', pathMatch: 'full' },
 
 ];
 @NgModule({

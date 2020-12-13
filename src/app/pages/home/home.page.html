@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  
+
   <!-- <p>{{ 'WELCOME_INTRO' | translate }}</p>
   <ion-list>
     <ion-list-header>
@@ -39,11 +39,23 @@
     </ion-card-header>
     <ion-card-content>
       {{event.eventDescription}}
-
     </ion-card-content>
-    <ion-item color="primary" href="https://www.ionicframework.com">
-      <ion-label>Primary</ion-label>
-    </ion-item>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item color="primary" href="#">
+            <ion-label>Details</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item color="primary" href="#">
+            <ion-label>Details</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </ion-card>
 </ion-content>
 <!-- test commit-->
