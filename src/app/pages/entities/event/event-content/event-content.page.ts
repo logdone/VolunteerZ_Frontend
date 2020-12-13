@@ -1,3 +1,4 @@
+import { Comment } from './../../comment/comment.model';
 import { EventService } from 'src/app/pages/entities/event/event.service';
 import { Event } from './../event.model';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ import { AccountService } from 'src/app/services/auth/account.service';
 export class EventContentPage implements OnInit {
   event: Event = {};
   account: Account;
+  comments : Comment[];
   constructor(    
     private navController: NavController,
     private eventService: EventService,
@@ -26,6 +28,9 @@ export class EventContentPage implements OnInit {
     this.activatedRoute.data.subscribe((response) => {
       this.event = response.data;
       console.log(this.event);
+      this.comments = this.event.comments;
+      console.log("comments "+this.comments);
+      
     });
     this.accountService.identity().then((account) => {
       console.log("in identity");

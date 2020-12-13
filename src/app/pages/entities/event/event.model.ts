@@ -1,3 +1,5 @@
+import { Reaction } from './../reaction/reaction.model';
+import { Comment } from './../comment/comment.model';
 import { BaseEntity } from 'src/model/base-entity';
 import { User } from '../../../services/user/user.model';
 
@@ -14,7 +16,9 @@ export class Event implements BaseEntity {
     public nbrReports?: number,
     public link?: string,
     public location?: string,
-    public participants?: any[],
+    public participants?: User[],
+    public comments?: Comment[],
+    public reactions? : Reaction[],
     public owner?: User
   ) {}
 }
