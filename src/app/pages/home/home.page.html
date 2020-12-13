@@ -31,7 +31,7 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-card *ngFor="let event of events; trackBy: trackId">
+  <ion-card *ngFor="let event of events; trackBy: trackId" button="true" (click)="navigateToEvent()">
     <img src="{{event.eventImage}}" />
     <ion-card-header>
       <ion-card-title>{{event.title}}</ion-card-title>
@@ -40,22 +40,20 @@
     <ion-card-content>
       {{event.eventDescription}}
     </ion-card-content>
-
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item color="primary" href="#">
-            <ion-label>Details</ion-label>
+          <ion-item class="ion-text-center" color="tertiary" href="#">
+            <ion-label>Participate</ion-label>
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item color="primary" href="#">
-            <ion-label>Details</ion-label>
+          <ion-item class="ion-text-center" color="light" href="#">
+            <ion-label>Share</ion-label>
           </ion-item>
         </ion-col>
       </ion-row>
     </ion-grid>
-
   </ion-card>
 </ion-content>
 <!-- test commit-->

@@ -31,6 +31,10 @@ export class HomePage implements OnInit {
     });
   }
 
+  navigateToEvent(){
+    this.goBackToHomePage();
+  }
+
   isAuthenticated() {
     return this.accountService.isAuthenticated();
   }

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EventFullContentComponent } from './event-full-content.component';
+import { EventContentPage } from './event-content.page';
 
-describe('EventFullContentComponent', () => {
-  let component: EventFullContentComponent;
-  let fixture: ComponentFixture<EventFullContentComponent>;
+describe('EventContentPage', () => {
+  let component: EventContentPage;
+  let fixture: ComponentFixture<EventContentPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventFullContentComponent ],
+      declarations: [ EventContentPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EventFullContentComponent);
+    fixture = TestBed.createComponent(EventContentPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
