@@ -26,4 +26,6 @@ export class EventContentPage implements OnInit {
     });
   }
 
+  
+
 }

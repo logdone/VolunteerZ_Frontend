@@ -31,4 +31,10 @@ export class EventService {
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  participate(id: number , userId : string) : Observable<HttpResponse<any>> {
+    return this.http.get<any>(`${this.resourceUrl}+"/participate/"+${id}+"/"+${userId}`, { observe: 'response' });
+  }
+
+  
 }

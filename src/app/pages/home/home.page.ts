@@ -52,6 +52,10 @@ export class HomePage implements OnInit {
     this.loadAll();
   }
 
+  participate(id : number){
+    this.eventService.participate(id,this.account.login);
+  }
+
   async loadAll(refresher?) {
     this.eventService
       .query()
