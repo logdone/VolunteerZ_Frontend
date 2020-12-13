@@ -31,8 +31,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  navigateToEvent(){
-    this.navController.navigateForward('/tabs/timeline');
+  navigateToEvent(id:number){
+    this.navController.navigateForward('/event-content/'+id);
   }
 
   isAuthenticated() {
