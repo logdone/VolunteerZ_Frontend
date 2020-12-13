@@ -53,7 +53,14 @@ export class HomePage implements OnInit {
   }
 
   participate(id : number){
-    this.eventService.participate(id,this.account.login);
+    console.log("In participate");
+    this.eventService.participate(id,this.account.login).subscribe(
+      (response) => {
+        console.log("event with id "+response.body.title);
+      }
+
+
+    );
   }
 
   async loadAll(refresher?) {

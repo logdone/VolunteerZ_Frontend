@@ -25,7 +25,7 @@ export class EventContentPage implements OnInit {
     console.log("in init");
     this.activatedRoute.data.subscribe((response) => {
       this.event = response.data;
-      console.log(this.event);
+      console.log(this.event.participants[0].id);
     });
     this.accountService.identity().then((account) => {
       if (account === null) {
