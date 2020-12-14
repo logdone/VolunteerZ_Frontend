@@ -62,7 +62,10 @@ export class EventContentPage implements OnInit {
     cComment.user = this.account;
     cComment.commentBody = this.currentComment;
     cComment.event = this.event;
-    this.commentService.create(cComment).subscribe();
+    this.commentService.create(cComment).subscribe((data)=>{
+      this.comments.push(data.body);
+      this.currentComment = "";
+    });
 
   }
   
