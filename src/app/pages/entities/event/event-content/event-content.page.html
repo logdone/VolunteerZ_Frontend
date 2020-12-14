@@ -30,7 +30,7 @@
   </ion-item>
   <ion-item>
     <ion-note slot="start">Participants</ion-note>
-    <ion-label>{{event.participants}}</ion-label>
+    <ion-label *ngFor="let participant of participants">{{participant.login}}</ion-label>
   </ion-item>
   <!-- <ion-item>
     <ion-note slot="start">Participants</ion-note>
@@ -45,8 +45,8 @@
         <img src="{{account?.imageUrl}}">
       </ion-avatar>
       <ion-label position="floating">Write a Comment</ion-label>
-      <ion-textarea  [(ngModel)]="currentComment" ></ion-textarea>
-      <ion-icon class="send_comment" slot="end" name="send-outline" (click)="reportComment()"></ion-icon>
+      <ion-textarea [(ngModel)]="currentComment" placeholder="Tap here to begin typing"></ion-textarea>
+      <ion-icon class="send_comment" slot="end" name="send-outline" (click)="sendComment()"></ion-icon>
     </ion-item>
     <ion-item-divider></ion-item-divider>
     <ion-item-sliding *ngFor="let comment of comments">
@@ -55,9 +55,9 @@
           <img src="{{comment.user.imageUrl}}">
         </ion-avatar>
         <ion-label>
-          <h3>{{comment.user.firstName}} {{comment.user.lastName}}</h3>
+          <h2 class="secondary-text">{{comment.user.firstName}} {{comment.user.lastName}}</h2>
           <ion-text color="dark">
-            <h5>{{comment.commentBody}}</h5>
+            <p>{{comment.commentBody}}</p>
           </ion-text>
         </ion-label>
       </ion-item>

@@ -1,9 +1,8 @@
 import { Comment } from './../../comment/comment.model';
-import { EventService } from 'src/app/pages/entities/event/event.service';
 import { Event } from './../event.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { CommentService } from '../../comment/comment.service';
 
@@ -15,58 +14,62 @@ import { CommentService } from '../../comment/comment.service';
 export class EventContentPage implements OnInit {
   event: Event = {};
   account: Account;
-  comments : Comment[];
-  currentComment : string;
-  constructor(    
+  comments: Comment[];
+  participants: any;
+  currentComment: string;
+  constructor(
     private navController: NavController,
-    private eventService: EventService,
     private activatedRoute: ActivatedRoute,
     private accountService: AccountService,
-    private commentService : CommentService,
-    private alertController: AlertController) 
-    { }
-    
+    private commentService: CommentService,
+    private toastCtrl: ToastController) { }
+
 
   ngOnInit() {
     console.log("in init");
     this.activatedRoute.data.subscribe((response) => {
       this.event = response.data;
       this.comments = this.event.comments;
-      
+      this.participants = this.event.participants;
     });
     this.accountService.identity().then((account) => {
-
       if (account === null) {
-      this.goBackToHomePage();
+        this.goBackToHomePage();
       } else {
-      this.account = account;
-      console.log(this.account);
+        this.account = account;
+        console.log(this.account);
       }
-});
-
+    });
   }
 
-  goBack(){
+  goBack() {
     this.navController.back();
   }
 
-
+  async presentToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Comment Published',
+      duration: 1000,
+      position: 'middle'
+    });
+    toast.present();
+  }
 
   private goBackToHomePage(): void {
     this.navController.navigateBack('/login');
   }
 
-  reportComment(){
-    console.log("Currenct Comment Body "+this.currentComment);
+  sendComment() {
+    console.log("Currenct Comment Body " + this.currentComment);
     let cComment = new Comment();
     cComment.user = this.account;
     cComment.commentBody = this.currentComment;
     cComment.event = this.event;
-    this.commentService.create(cComment).subscribe((data)=>{
+    this.commentService.create(cComment).subscribe((data) => {
       this.comments.push(data.body);
       this.currentComment = "";
     });
-
+    this.presentToast();
   }
-  
+
 }
