@@ -45,7 +45,7 @@
         <img src="{{account?.imageUrl}}">
       </ion-avatar>
       <ion-label position="floating">Write a Comment</ion-label>
-      <ion-textarea></ion-textarea>
+      <ion-textarea  [(ngModel)]="currentComment" ></ion-textarea>
       <ion-icon class="send_comment" slot="end" name="send-outline"></ion-icon>
     </ion-item>
     <ion-item-divider></ion-item-divider>

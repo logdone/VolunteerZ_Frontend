@@ -15,6 +15,7 @@ export class EventContentPage implements OnInit {
   event: Event = {};
   account: Account;
   comments : Comment[];
+  currentComment ="Comment is working ! ";
   constructor(    
     private navController: NavController,
     private eventService: EventService,
@@ -28,16 +29,12 @@ export class EventContentPage implements OnInit {
     console.log("in init");
     this.activatedRoute.data.subscribe((response) => {
       this.event = response.data;
-      console.log(this.event);
       this.comments = this.event.comments;
-      console.log("comments "+this.comments[0].commentBody);
       
     });
     this.accountService.identity().then((account) => {
-      console.log("in identity");
 
       if (account === null) {
-      console.log("not logged in ");
       this.goBackToHomePage();
       } else {
       this.account = account;
@@ -54,11 +51,19 @@ export class EventContentPage implements OnInit {
 
 
   private goBackToHomePage(): void {
-    this.navController.navigateBack('');
+    this.navController.navigateBack('/login');
   }
 
   reportComment(){
-    console.log("Hello");
+    console.log("Currenct Comment Body "+this.currentComment);
+    let cComment = new Comment();
+    cComment.user = this.account;
+    cComment.commentBody = this.currentComment;
+    this.event.comments.push(cComment);
+    this.eventService.update(this.event).subscribe((response) => {
+      this.event = response.body;
+      console.log("After update"+this.event.comments.length);      
+    });
   }
   
 }

@@ -16,6 +16,7 @@ export class EventService {
   }
 
   update(event: Event): Observable<HttpResponse<Event>> {
+    console.log("in _update service id iv"+event.comments[2].commentBody);
     return this.http.put(this.resourceUrl, event, { observe: 'response' });
   }
 
