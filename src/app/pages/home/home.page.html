@@ -45,7 +45,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item class="ion-text-center" color="tertiary" (click)="participate(event.id)">
+          <ion-item class="ion-text-center" color="tertiary" [disabled]="isParticipant(event)" (click)="participate(event.id)" >
             <ion-label>Participate</ion-label>
           </ion-item>
         </ion-col>

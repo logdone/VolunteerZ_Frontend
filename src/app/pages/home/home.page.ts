@@ -8,6 +8,7 @@ import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import { Event } from 'src/app/pages/entities/event/event.model';
 import { ClipboardService } from 'ngx-clipboard';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -81,6 +82,18 @@ export class HomePage implements OnInit {
 
 
     );
+  }
+
+  isParticipant(event : Event){
+    for(let i =0 ;i<event.participants.length;i++){
+
+    console.log(event.participants[i]);
+      if(event.participants[i].login==this.account.login){
+        console.log("You are participant in event "+event.title);
+        return true;
+      }
+    }
+    return null;
   }
 
   async loadAll(refresher?) {
