@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, AlertController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
+import { CommentService } from '../../comment/comment.service';
 
 @Component({
   selector: 'app-event-content',
@@ -15,12 +16,13 @@ export class EventContentPage implements OnInit {
   event: Event = {};
   account: Account;
   comments : Comment[];
-  currentComment ="Comment is working ! ";
+  currentComment : string;
   constructor(    
     private navController: NavController,
     private eventService: EventService,
     private activatedRoute: ActivatedRoute,
     private accountService: AccountService,
+    private commentService : CommentService,
     private alertController: AlertController) 
     { }
     
@@ -59,11 +61,9 @@ export class EventContentPage implements OnInit {
     let cComment = new Comment();
     cComment.user = this.account;
     cComment.commentBody = this.currentComment;
-    this.event.comments.push(cComment);
-    this.eventService.update(this.event).subscribe((response) => {
-      this.event = response.body;
-      console.log("After update"+this.event.comments.length);      
-    });
+    cComment.event = this.event;
+    this.commentService.create(cComment).subscribe();
+
   }
   
 }
