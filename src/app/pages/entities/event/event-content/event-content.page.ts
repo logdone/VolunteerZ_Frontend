@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { CommentService } from '../../comment/comment.service';
+import { Reaction } from '../../reaction/reaction.model';
+import { ReactionService } from '../../reaction/reaction.service';
 
 @Component({
   selector: 'app-event-content',
@@ -17,11 +19,14 @@ export class EventContentPage implements OnInit {
   comments: Comment[];
   participants: any;
   currentComment: string;
+  isReacted : boolean;
+  reactionsCount : number;
   constructor(
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
     private accountService: AccountService,
     private commentService: CommentService,
+    private reactionService : ReactionService,
     private toastCtrl: ToastController) { }
 
 
@@ -31,6 +36,8 @@ export class EventContentPage implements OnInit {
       this.event = response.data;
       this.comments = this.event.comments;
       this.participants = this.event.participants;
+      this.event.reactions.length;
+
     });
     this.accountService.identity().then((account) => {
       if (account === null) {
@@ -70,6 +77,15 @@ export class EventContentPage implements OnInit {
       this.currentComment = "";
     });
     this.presentToast();
+  }
+
+
+  reactToEvent() {
+    let reaction = new Reaction();
+    reaction.user = this.account;
+    reaction.event = this.event;
+    this.reactionService.create(reaction).subscribe((data) => {
+    });
   }
 
 }
