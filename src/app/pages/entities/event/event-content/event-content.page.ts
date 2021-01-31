@@ -40,16 +40,25 @@ export class EventContentPage implements OnInit {
       this.comments = this.event.comments;
       this.participants = this.event.participants;
       this.event.reactions.length;
+      this.accountService.identity().then((account) => {
+        if (account === null) {
+          this.goBackToHomePage();
+        } else {
+          this.account = account;
+          console.log(this.account);
+          console.log("Hello im in the last step");
+         this.event.reactions.forEach(e=>{
+          console.log("The user"+e.user.id);
+          console.log("The event reactor"+account.id);
+            if(e.user.id==this.account.id){
+              this.isReacted = true;
+            }
+          })
+        }
+      });
 
     });
-    this.accountService.identity().then((account) => {
-      if (account === null) {
-        this.goBackToHomePage();
-      } else {
-        this.account = account;
-        console.log(this.account);
-      }
-    });
+
     
   }
 
