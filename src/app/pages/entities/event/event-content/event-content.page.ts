@@ -7,6 +7,8 @@ import { AccountService } from 'src/app/services/auth/account.service';
 import { CommentService } from '../../comment/comment.service';
 import { Reaction } from '../../reaction/reaction.model';
 import { ReactionService } from '../../reaction/reaction.service';
+import { ActionSheetController } from '@ionic/angular';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event-content',
@@ -27,7 +29,8 @@ export class EventContentPage implements OnInit {
     private accountService: AccountService,
     private commentService: CommentService,
     private reactionService : ReactionService,
-    private toastCtrl: ToastController) { }
+    private toastCtrl: ToastController,
+    public actionSheetCtrl: ActionSheetController) { }
 
 
   ngOnInit() {
@@ -40,15 +43,15 @@ export class EventContentPage implements OnInit {
         this.account = account;
         console.log(this.account);
       }
-      this.activatedRoute.data.subscribe((response) => {
-        this.event = response.data;
-        this.comments = this.event.comments;
-        this.participants = this.event.participants;
-        this.event.reactions.length;
-        this.event.reactions.forEach(e => {if(e.user==this.account){
-          this.isReacted == true;
-        }});
-      });
+    });
+    this.activatedRoute.data.subscribe((response) => {
+      this.event = response.data;
+      this.comments = this.event.comments;
+      this.participants = this.event.participants;
+      this.event.reactions.length;
+      this.event.reactions.forEach(e => {if(e.user==this.account){
+        this.isReacted == true;
+      }});
     });
   }
 
@@ -90,4 +93,27 @@ export class EventContentPage implements OnInit {
     this.reactionService.create(reaction).subscribe();
   }
 
+  async presentActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+          icon: 'add',
+          text: 'Participate',
+          role: 'participate',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          icon: 'alert-circle-outline',
+          text: 'Report',
+          role: 'report',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        }
+      ]
+    });
+    (await actionSheet).present();
+  }
 }
