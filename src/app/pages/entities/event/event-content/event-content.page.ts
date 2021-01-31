@@ -32,23 +32,26 @@ export class EventContentPage implements OnInit {
 
   ngOnInit() {
     console.log("in init");
+    this.activatedRoute.data.subscribe((response) => {
+      this.event = response.data;
+      this.comments = this.event.comments;
+      this.participants = this.event.participants;
+      this.event.reactions.length;
 
+    });
     this.accountService.identity().then((account) => {
       if (account === null) {
         this.goBackToHomePage();
       } else {
         this.account = account;
         console.log(this.account);
+        console.log("in account ");
+        console.log(this.event);
+        this.event.reactions.forEach(e => {if(e.user.id==this.account.id){
+          console.log("reacted");
+          this.isReacted == true;
+        }});
       }
-    });
-    this.activatedRoute.data.subscribe((response) => {
-      this.event = response.data;
-      this.comments = this.event.comments;
-      this.participants = this.event.participants;
-      this.event.reactions.length;
-      this.event.reactions.forEach(e => {if(e.user==this.account){
-        this.isReacted == true;
-      }});
     });
   }
 

@@ -36,4 +36,5 @@ export class ReactionService {
         return this.http.get<Reaction[]>(this.resourceUrl+"/event/"+id);
 
     }
+
 }
