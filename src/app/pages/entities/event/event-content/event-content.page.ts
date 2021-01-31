@@ -32,13 +32,7 @@ export class EventContentPage implements OnInit {
 
   ngOnInit() {
     console.log("in init");
-    this.activatedRoute.data.subscribe((response) => {
-      this.event = response.data;
-      this.comments = this.event.comments;
-      this.participants = this.event.participants;
-      this.event.reactions.length;
 
-    });
     this.accountService.identity().then((account) => {
       if (account === null) {
         this.goBackToHomePage();
@@ -46,6 +40,15 @@ export class EventContentPage implements OnInit {
         this.account = account;
         console.log(this.account);
       }
+      this.activatedRoute.data.subscribe((response) => {
+        this.event = response.data;
+        this.comments = this.event.comments;
+        this.participants = this.event.participants;
+        this.event.reactions.length;
+        this.event.reactions.forEach(e => {if(e.user==this.account){
+          this.isReacted == true;
+        }});
+      });
     });
   }
 
@@ -84,8 +87,7 @@ export class EventContentPage implements OnInit {
     let reaction = new Reaction();
     reaction.user = this.account;
     reaction.event = this.event;
-    this.reactionService.create(reaction).subscribe((data) => {
-    });
+    this.reactionService.create(reaction).subscribe();
   }
 
 }
