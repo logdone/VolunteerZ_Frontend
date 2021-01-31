@@ -12,7 +12,8 @@
 
 <ion-content>
   <img src="{{event.eventImage}}" />
-  <ion-icon class="reactBtn" name="heart-outline"></ion-icon>
+  <ion-icon class="reactBtn" name="heart-outline" (click)="reactToEvent()" *ngIf="!isReacted"></ion-icon>
+  <ion-icon class="reactBtn" name="heart" *ngIf="isReacted"></ion-icon>
   <ion-card-content>
     {{event.eventDescription}}
   </ion-card-content>
@@ -38,7 +39,7 @@
     <ion-label>{{event.participants}}</ion-label>
   </ion-item> -->
   <ion-item-divider>
-    Hearts &nbsp;<ion-icon class="reactBtn2" name="heart-outline"></ion-icon>
+    Hearts &nbsp;<ion-icon class="reactBtn2" name="heart-outline"></ion-icon><div>{{event.reactions.length}}</div>
   </ion-item-divider>
   <ion-item-divider>
     Comments
