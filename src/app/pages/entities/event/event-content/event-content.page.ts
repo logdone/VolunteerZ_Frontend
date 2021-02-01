@@ -1,3 +1,4 @@
+import { EventService } from './../event.service';
 import { Comment } from './../../comment/comment.model';
 import { Event } from './../event.model';
 import { Component, OnInit } from '@angular/core';
@@ -9,6 +10,7 @@ import { Reaction } from '../../reaction/reaction.model';
 import { ReactionService } from '../../reaction/reaction.service';
 import { ActionSheetController } from '@ionic/angular';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Account } from 'src/model/account.model';
 
 @Component({
   selector: 'app-event-content',
@@ -22,6 +24,7 @@ export class EventContentPage implements OnInit {
   participants: any;
   currentComment: string;
   isReacted : boolean;
+  isParticipant : boolean;
   reactionsCount : number;
   constructor(
     private navController: NavController,
@@ -29,6 +32,7 @@ export class EventContentPage implements OnInit {
     private accountService: AccountService,
     private commentService: CommentService,
     private reactionService : ReactionService,
+    private eventService : EventService,
     private toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController) { }
 
@@ -50,8 +54,13 @@ export class EventContentPage implements OnInit {
          this.event.reactions.forEach(e=>{
           console.log("The user"+e.user.id);
           console.log("The event reactor"+account.id);
-            if(e.user.id==this.account.id){
+            if(e.user.login==this.account.login){
               this.isReacted = true;
+            }
+          });
+          this.event.participants.forEach(p=>{
+            if(p.login == this.account.login){
+              this.isParticipant = true;
             }
           })
         }
@@ -115,8 +124,9 @@ export class EventContentPage implements OnInit {
           icon: 'alert-circle-outline',
           text: 'Report',
           role: 'report',
+          
           handler: () => {
-            console.log('Destructive clicked');
+            this.eventService.report(this.event.id,this.account.login).subscribe();
           }
         }
       ]
