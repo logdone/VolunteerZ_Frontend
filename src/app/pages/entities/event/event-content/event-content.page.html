@@ -40,7 +40,15 @@
     <ion-label>{{event.participants}}</ion-label>
   </ion-item> -->
   <ion-item-divider>
-    Hearts &nbsp;<ion-icon class="reactBtn2" name="heart-outline"></ion-icon><div>{{event.reactions.length}}</div>
+    Hearts &nbsp;
+    <ng-container *ngIf="!isReacted">
+      <ion-icon class="reactBtn2" name="heart-outline" (click)="reactToEvent()"></ion-icon>
+      <div> &nbsp;{{event.reactions.length}} others hearted this event</div>
+    </ng-container>
+    <ng-container *ngIf="isReacted">
+      <ion-icon class="reactBtn2" name="heart"></ion-icon>
+      <div> &nbsp; you and {{event.reactions.length-1}} others hearted this event</div>
+    </ng-container>
   </ion-item-divider>
   <ion-item-divider>
     Comments
@@ -68,7 +76,7 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger" >Report
+        <ion-item-option color="danger">Report
           <ion-icon name="alert-circle-outline">
           </ion-icon>
         </ion-item-option>
