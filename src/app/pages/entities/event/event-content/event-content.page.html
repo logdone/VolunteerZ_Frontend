@@ -33,7 +33,10 @@
   </ion-item>
   <ion-item>
     <ion-note slot="start">Participants</ion-note>
-    <ion-label *ngFor="let participant of participants">{{participant.login}}</ion-label>
+    <p-avatarGroup>
+      <p-avatar *ngFor="let participant of participants| slice:0:9;" image="{{participant.imageUrl}}" shape="circle"></p-avatar>
+      <p-avatar *ngIf="participants.length>9" label="+{{participants.length-9}}" shape="circle"></p-avatar>
+    </p-avatarGroup>
   </ion-item>
   <!-- <ion-item>
     <ion-note slot="start">Participants</ion-note>
