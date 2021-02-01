@@ -14,6 +14,9 @@ import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor'
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { EventContentPage } from './pages/entities/event/event-content/event-content.page';
 import { FormsModule } from '@angular/forms';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -22,6 +25,8 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent, EventContentPage],
   entryComponents: [],
   imports: [
+    AvatarModule,
+    AvatarGroupModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
@@ -53,4 +58,4 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
