@@ -25,6 +25,7 @@ export class EventContentPage implements OnInit {
   currentComment: string;
   isReacted : boolean;
   isParticipant : boolean;
+  isReported : boolean;
   reactionsCount : number;
   constructor(
     private navController: NavController,
@@ -61,6 +62,11 @@ export class EventContentPage implements OnInit {
           this.event.participants.forEach(p=>{
             if(p.login == this.account.login){
               this.isParticipant = true;
+            }
+          });
+          this.event.eventReports.forEach(r =>{
+            if(r.login==this.account.login){
+              this.isReported = true;
             }
           })
         }
@@ -110,23 +116,36 @@ export class EventContentPage implements OnInit {
   }
 
   async presentActionSheet() {
+    let cssParticipant = "";
+    let cssReport = "";
+
+    if(this.isParticipant){
+      cssParticipant = "disabled-item"
+    }
+    if(this.isReported){
+      cssReport = "disabled-item"
+    }
+    
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           icon: 'add',
           text: 'Participate',
           role: 'participate',
+          cssClass : cssParticipant,
           handler: () => {
-            console.log('Cancel clicked');
+            this.eventService.participate(this.event.id,this.account.login).subscribe(()=>window.location.reload());
           }
         },
         {
           icon: 'alert-circle-outline',
           text: 'Report',
           role: 'report',
-          
+          cssClass : cssReport,
+
           handler: () => {
-            this.eventService.report(this.event.id,this.account.login).subscribe();
+            this.eventService.report(this.event.id,this.account.login).subscribe(()=>window.location.reload());
+            
           }
         }
       ]

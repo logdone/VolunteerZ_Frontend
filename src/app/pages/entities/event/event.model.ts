@@ -20,6 +20,6 @@ export class Event implements BaseEntity {
     public comments?: Comment[],
     public reactions? : Reaction[],
     public owner?: User,
-    public reports? : User[]
+    public eventReports? : User[]
   ) {}
 }
