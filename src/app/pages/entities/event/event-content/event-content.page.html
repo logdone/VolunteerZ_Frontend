@@ -45,7 +45,7 @@
   <ion-item-divider>
     Hearts &nbsp;
     <ng-container *ngIf="!isReacted">
-      <ion-icon class="reactBtn2" name="heart-outline" (click)="reactToEvent()"></ion-icon>
+      <ion-icon class="reactBtn2" name="heart-outline" (click)="reactToEvent(); isReacted=true"></ion-icon>
       <div> &nbsp;{{event.reactions.length}} others hearted this event</div>
     </ng-container>
     <ng-container *ngIf="isReacted">
