@@ -71,20 +71,23 @@ export class HomePage implements OnInit {
   }
 
   participate(event: Event, $event: any) {
-    if(this.isParticipant(event)){
+    if(!this.isParticipant(event)){
     this.eventService.participate(event.id, this.account.login).subscribe(
       (response) => {
-        console.log("Response");
+        console.log("Participating");
         console.log(response);
         event=response.body;
+        this.loadAll();
+
       }
     );}
     else{
       this.eventService.unparticipate(event.id, this.account.login).subscribe(
         (response) => {
-          console.log("Response");
+          console.log("Unparticipating");
           console.log(response);
-        event=response.body;
+          event=response.body;
+        this.loadAll();
         }
       );
     }
