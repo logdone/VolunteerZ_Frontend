@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { EventService } from './../event.service';
 import { Comment } from './../../comment/comment.model';
 import { Event } from './../event.model';
@@ -11,6 +12,8 @@ import { ReactionService } from '../../reaction/reaction.service';
 import { ActionSheetController } from '@ionic/angular';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Account } from 'src/model/account.model';
+import { map } from 'rxjs/internal/operators/map';
+import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'app-event-content',
@@ -64,11 +67,16 @@ export class EventContentPage implements OnInit {
               this.isParticipant = true;
             }
           });
-          this.event.eventReports.forEach(r =>{
-            if(r.login==this.account.login){
-              this.isReported = true;
-            }
-          })
+          console.log(this.event.comments);
+          this.event.comments.forEach(c => {
+            if(c.commentReports!=null){
+              c.commentReports.forEach(r => {
+                if(r.login==this.account.login){
+                  c.isReported = true;
+                  console.log("Hide report btn");
+                }
+              });}
+          });
         }
       });
 
@@ -151,5 +159,28 @@ export class EventContentPage implements OnInit {
       ]
     });
     (await actionSheet).present();
+  }
+
+  isAbleToReportComment(comment : Comment):boolean{
+    // return this.commentService.find(id).pipe(map((data)=>{
+    //   for(let r of data.body.commentReports){
+    //     if(this.account.login == r.login){
+    //       return true;
+    //     }
+    //   }
+    //   return false;
+    // }));
+
+    for(let r of comment.commentReports){
+           if(this.account.login == r.login){
+            console.log("Already reported");
+
+            return true;
+         }
+       }
+    return false;
+  }
+  reportComment(id){
+    this.commentService.report(id,this.account.login).subscribe();
   }
 }

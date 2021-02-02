@@ -8,6 +8,9 @@ export class Comment implements BaseEntity {
         public commentBody?: string,
         public event?: Event,
         public user?: User,
+        public commentReports? : User[],
+        public isReported? : boolean,
+
     ) {
     }
 }
