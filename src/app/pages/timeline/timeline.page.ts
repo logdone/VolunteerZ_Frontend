@@ -1,8 +1,11 @@
+import { Observable } from 'rxjs';
+import { TimelineService } from './timeline.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Account } from 'src/model/account.model';
+import { Timeline } from './timeline';
 
 
 @Component({
@@ -12,8 +15,8 @@ import { Account } from 'src/model/account.model';
 })
 export class TimelinePage implements OnInit {
   account: Account;
-
-  constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService) {}
+  data : Observable<Timeline[]>;
+  constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService,private timelineService: TimelineService) {}
 
   ngOnInit() {
     this.accountService.identity().then((account) => {
@@ -21,6 +24,7 @@ export class TimelinePage implements OnInit {
         this.goBackToHomePage();
       } else {
         this.account = account;
+        this.data = this.timelineService.getAllTimeline(this.account.login);
       }
     });
   }
