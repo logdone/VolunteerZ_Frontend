@@ -45,7 +45,10 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item class="ion-text-center" color="tertiary" [disabled]="isParticipant(event)" (click)="participate(event.id)" >
+          <ion-item class="ion-text-center" color="tertiary" *ngIf="isParticipant(event)" disabled>
+            <ion-label>Participate</ion-label>
+          </ion-item>
+          <ion-item class="ion-text-center" color="tertiary" *ngIf="!isParticipant(event)" (click)="participate(event.id, $event)">
             <ion-label>Participate</ion-label>
           </ion-item>
         </ion-col>
