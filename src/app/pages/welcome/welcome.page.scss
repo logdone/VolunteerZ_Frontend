@@ -4,8 +4,12 @@
   width: 209px;
   height: 300px;
   margin: 20px auto;
-  background: url('../../../assets/img/hipster.png') no-repeat center top;
+  background: url('../../../assets/img/volunteer_logo.png') no-repeat center top;
   background-size: contain;
+}
+
+.text-center {
+  text-align: center;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -16,7 +20,7 @@
   only screen and (min-resolution: 192dpi),
   only screen and (min-resolution: 2dppx) {
   .hipster {
-    background: url('../../../assets/img/hipster2x.png') no-repeat center top;
+    background: url('../../../assets/img/volunteer_logo.png') no-repeat center top;
     background-size: contain;
   }
 }
