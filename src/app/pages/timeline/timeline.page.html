@@ -10,8 +10,8 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
-  
-  <ion-item *ngFor="let timeline of data | async;">
+
+<!--   <ion-item *ngFor="let timeline of data | async;">
     <ion-avatar slot="start">
       <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
     </ion-avatar>
@@ -21,8 +21,15 @@
       <p></p>
 
     </ion-label>
-  </ion-item>
+  </ion-item> -->
 
- 
-</ion-content>
-<!-- test commit-->
+  <p-timeline [value]="data | async">
+    <ng-template pTemplate="content" let-timeline>
+      <small class="p-text-secondary">{{timeline.time}}</small>
+    </ng-template>
+    <ng-template pTemplate="opposite" let-timeline>
+      {{timeline.action}}
+    </ng-template>
+  </p-timeline>
+
+</ion-content> <!-- test commit-->

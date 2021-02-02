@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { TimelinePage } from './timeline.page';
+import { TimelineModule } from 'primeng/timeline';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [IonicModule, CommonModule, FormsModule, TranslateModule, RouterModule.forChild(routes)],
+  imports: [TimelineModule, IonicModule, CommonModule, FormsModule, TranslateModule, RouterModule.forChild(routes)],
   declarations: [TimelinePage],
 })
 export class TimelinePageModule {}
