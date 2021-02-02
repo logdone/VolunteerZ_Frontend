@@ -6,12 +6,15 @@
       <ion-chip>
         <ion-label>{{event.category}}</ion-label>
       </ion-chip>
+      <ion-icon name="menu" (click)="presentActionSheet()"></ion-icon>
     </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <img src="{{event.eventImage}}" />
+  <ion-icon class="reactBtn" name="heart-outline" (click)="reactToEvent()" *ngIf="!isReacted"></ion-icon>
+  <ion-icon class="reactBtn" name="heart" *ngIf="isReacted"></ion-icon>
   <ion-card-content>
     {{event.eventDescription}}
   </ion-card-content>
@@ -30,12 +33,26 @@
   </ion-item>
   <ion-item>
     <ion-note slot="start">Participants</ion-note>
-    <ion-label *ngFor="let participant of participants">{{participant.login}}</ion-label>
+    <p-avatarGroup>
+      <p-avatar *ngFor="let participant of participants| slice:0:9;" image="{{participant.imageUrl}}" shape="circle"></p-avatar>
+      <p-avatar *ngIf="participants.length>9" label="+{{participants.length-9}}" shape="circle"></p-avatar>
+    </p-avatarGroup>
   </ion-item>
   <!-- <ion-item>
     <ion-note slot="start">Participants</ion-note>
     <ion-label>{{event.participants}}</ion-label>
   </ion-item> -->
+  <ion-item-divider>
+    Hearts &nbsp;
+    <ng-container *ngIf="!isReacted">
+      <ion-icon class="reactBtn2" name="heart-outline" (click)="reactToEvent()"></ion-icon>
+      <div> &nbsp;{{event.reactions.length}} others hearted this event</div>
+    </ng-container>
+    <ng-container *ngIf="isReacted">
+      <ion-icon class="reactBtn2" name="heart"></ion-icon>
+      <div> &nbsp; you and {{event.reactions.length-1}} others hearted this event</div>
+    </ng-container>
+  </ion-item-divider>
   <ion-item-divider>
     Comments
   </ion-item-divider>
@@ -61,8 +78,8 @@
           </ion-text>
         </ion-label>
       </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="danger" >Report
+      <ion-item-options side="end" *ngIf="!comment.isReported">
+        <ion-item-option color="danger" (click)="reportComment(comment.id)">Report
           <ion-icon name="alert-circle-outline">
           </ion-icon>
         </ion-item-option>

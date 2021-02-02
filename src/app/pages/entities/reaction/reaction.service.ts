@@ -31,4 +31,10 @@ export class ReactionService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
+
+    getEventReactions(id : number):Observable<Reaction[]>{
+        return this.http.get<Reaction[]>(this.resourceUrl+"/event/"+id);
+
+    }
+
 }

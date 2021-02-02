@@ -8,7 +8,8 @@ import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import { Event } from 'src/app/pages/entities/event/event.model';
 import { ClipboardService } from 'ngx-clipboard';
-import { of } from 'rxjs';
+import { ModalController } from '@ionic/angular';
+import { CreateEventPage } from './create-event/create-event.page';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,7 @@ export class HomePage implements OnInit {
   account: Account;
   events: Event[];
 
-  constructor(private _clipboardService: ClipboardService, private toastCtrl: ToastController, private eventService: EventService, public navController: NavController, private accountService: AccountService, private loginService: LoginService) {
+  constructor(public modalCtrl: ModalController, private _clipboardService: ClipboardService, private toastCtrl: ToastController, private eventService: EventService, public navController: NavController, private accountService: AccountService, private loginService: LoginService) {
     this.events = [];
   }
 
@@ -120,5 +121,8 @@ export class HomePage implements OnInit {
       );
   }
 
-
+  async presentModal() {
+    const modal = await this.modalCtrl.create({component: CreateEventPage});
+    modal.present();
+  }
 }

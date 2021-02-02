@@ -19,6 +19,8 @@ export class Event implements BaseEntity {
     public participants?: User[],
     public comments?: Comment[],
     public reactions? : Reaction[],
-    public owner?: User
+    public owner?: User,
+    public eventReports? : User[],
+
   ) {}
 }

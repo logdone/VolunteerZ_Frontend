@@ -31,4 +31,8 @@ export class CommentService {
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
+
+    report(id: number , userId : string) : Observable<HttpResponse<any>> {
+        return this.http.get<any>(`${this.resourceUrl}/report/${id}/${userId}`, { observe: 'response' });
+      }
 }

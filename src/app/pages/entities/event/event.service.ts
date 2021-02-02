@@ -38,5 +38,9 @@ export class EventService {
     return this.http.get<any>(`${this.resourceUrl}/participate/${id}/${userId}`, { observe: 'response' });
   }
 
+  report(id: number , userId : string) : Observable<HttpResponse<any>> {
+    console.log("in participate service report")
+    return this.http.get<any>(`${this.resourceUrl}/report/${id}/${userId}`, { observe: 'response' });
+  }
   
 }
