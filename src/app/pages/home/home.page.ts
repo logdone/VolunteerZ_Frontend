@@ -70,13 +70,25 @@ export class HomePage implements OnInit {
     this.loadAll();
   }
 
-  participate(id: number, $event: any) {
-    this.eventService.participate(id, this.account.login).subscribe(
+  participate(event: Event, $event: any) {
+    if(this.isParticipant(event)){
+    this.eventService.participate(event.id, this.account.login).subscribe(
       (response) => {
-        console.log("event with id " + response.body.title);
+        console.log("Response");
+        console.log(response);
+        event=response.body;
       }
-    );
-    ($event.target as HTMLButtonElement).parentElement.setAttribute('disabled', 'true');
+    );}
+    else{
+      this.eventService.unparticipate(event.id, this.account.login).subscribe(
+        (response) => {
+          console.log("Response");
+          console.log(response);
+        event=response.body;
+        }
+      );
+    }
+    //($event.target as HTMLButtonElement).parentElement.setAttribute('disabled', 'true');
   }
 
   isParticipant(event: Event) {
