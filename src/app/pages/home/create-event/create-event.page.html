@@ -6,9 +6,54 @@
         New Event
       </ion-title>
     </ion-item>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item [hidden]="!form.id">
+        <ion-label>ID</ion-label>
+        <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input type="text" name="title" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Event Description</ion-label>
+        <ion-input type="text" name="eventDescription" formControlName="eventDescription"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Event Image</ion-label>
+        <ion-input type="text" name="eventImage" formControlName="eventImage"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+        <ion-input type="text" name="category" formControlName="category"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Creation Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="creationDate" id="field_creationDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Event Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="eventDate" id="field_eventDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Max Number Volunteers</ion-label>
+        <ion-input type="number" name="maxNumberVolunteers" formControlName="maxNumberVolunteers"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Location</ion-label>
+        <ion-input type="text" name="location" formControlName="location"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>
