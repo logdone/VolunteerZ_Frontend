@@ -49,7 +49,7 @@
       <div> &nbsp;{{event.reactions.length}} others hearted this event</div>
     </ng-container>
     <ng-container *ngIf="isReacted">
-      <ion-icon class="reactBtn2" name="heart"></ion-icon>
+      <ion-icon class="reactBtn2" name="heart" (click)="unreactToEvent()"></ion-icon>
       <div> &nbsp; you and {{event.reactions.length-1}} others hearted this event</div>
     </ng-container>
   </ion-item-divider>
