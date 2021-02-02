@@ -26,17 +26,17 @@ export class EventContentPage implements OnInit {
   comments: Comment[];
   participants: any;
   currentComment: string;
-  isReacted : boolean;
-  isParticipant : boolean;
-  isReported : boolean;
-  reactionsCount : number;
+  isReacted: boolean;
+  isParticipant: boolean;
+  isReported: boolean;
+  reactionsCount: number;
   constructor(
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
     private accountService: AccountService,
     private commentService: CommentService,
-    private reactionService : ReactionService,
-    private eventService : EventService,
+    private reactionService: ReactionService,
+    private eventService: EventService,
     private toastCtrl: ToastController,
     public actionSheetCtrl: ActionSheetController) { }
 
@@ -55,34 +55,43 @@ export class EventContentPage implements OnInit {
           this.account = account;
           console.log(this.account);
           console.log("Hello im in the last step");
-         this.event.reactions.forEach(e=>{
-          console.log("The user"+e.user.id);
-          console.log("The event reactor"+account.id);
-            if(e.user.login==this.account.login){
+          this.event.reactions.forEach(e => {
+            console.log("The user" + e.user.id);
+            console.log("The event reactor" + account.id);
+            if (e.user.login == this.account.login) {
               this.isReacted = true;
             }
           });
-          this.event.participants.forEach(p=>{
-            if(p.login == this.account.login){
+          this.event.participants.forEach(p => {
+            if (p.login == this.account.login) {
               this.isParticipant = true;
             }
           });
+          if (this.event.eventReports != null) {
+            this.event.eventReports.forEach(r => {
+
+              if (r.login == this.account.login) {
+                this.isReported = true;
+              }
+            });
+          }
           console.log(this.event.comments);
           this.event.comments.forEach(c => {
-            if(c.commentReports!=null){
+            if (c.commentReports != null) {
               c.commentReports.forEach(r => {
-                if(r.login==this.account.login){
+                if (r.login == this.account.login) {
                   c.isReported = true;
                   console.log("Hide report btn");
                 }
-              });}
+              });
+            }
           });
         }
       });
 
     });
 
-    
+
   }
 
   goBack() {
@@ -127,33 +136,33 @@ export class EventContentPage implements OnInit {
     let cssParticipant = "";
     let cssReport = "";
 
-    if(this.isParticipant){
+    if (this.isParticipant) {
       cssParticipant = "disabled-item"
     }
-    if(this.isReported){
+    if (this.isReported) {
       cssReport = "disabled-item"
     }
-    
+
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           icon: 'add',
           text: 'Participate',
           role: 'participate',
-          cssClass : cssParticipant,
+          cssClass: cssParticipant,
           handler: () => {
-            this.eventService.participate(this.event.id,this.account.login).subscribe(()=>window.location.reload());
+            this.eventService.participate(this.event.id, this.account.login).subscribe(() => window.location.reload());
           }
         },
         {
           icon: 'alert-circle-outline',
           text: 'Report',
           role: 'report',
-          cssClass : cssReport,
+          cssClass: cssReport,
 
           handler: () => {
-            this.eventService.report(this.event.id,this.account.login).subscribe(()=>window.location.reload());
-            
+            this.eventService.report(this.event.id, this.account.login).subscribe(() => window.location.reload());
+
           }
         }
       ]
@@ -161,7 +170,7 @@ export class EventContentPage implements OnInit {
     (await actionSheet).present();
   }
 
-  isAbleToReportComment(comment : Comment):boolean{
+  isAbleToReportComment(comment: Comment): boolean {
     // return this.commentService.find(id).pipe(map((data)=>{
     //   for(let r of data.body.commentReports){
     //     if(this.account.login == r.login){
@@ -171,16 +180,16 @@ export class EventContentPage implements OnInit {
     //   return false;
     // }));
 
-    for(let r of comment.commentReports){
-           if(this.account.login == r.login){
-            console.log("Already reported");
+    for (let r of comment.commentReports) {
+      if (this.account.login == r.login) {
+        console.log("Already reported");
 
-            return true;
-         }
-       }
+        return true;
+      }
+    }
     return false;
   }
-  reportComment(id){
-    this.commentService.report(id,this.account.login).subscribe();
+  reportComment(id) {
+    this.commentService.report(id, this.account.login).subscribe();
   }
 }

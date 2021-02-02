@@ -85,12 +85,11 @@ export class HomePage implements OnInit {
     );
   }
 
-  isParticipant(event : Event){
-    for(let i =0 ;i<event.participants.length;i++){
-
-    console.log(event.participants[i]);
-      if(event.participants[i].login==this.account.login){
-        console.log("You are participant in event "+event.title);
+  isParticipant(event: Event) {
+    for (let i = 0; i < event.participants.length; i++) {
+      console.log(event.participants[i]);
+      if (event.participants[i].login == this.account.login) {
+        console.log("You are participant in event " + event.title);
         return true;
       }
     }
@@ -122,7 +121,7 @@ export class HomePage implements OnInit {
   }
 
   async presentModal() {
-    const modal = await this.modalCtrl.create({component: CreateEventPage});
+    const modal = await this.modalCtrl.create({ component: CreateEventPage });
     modal.present();
   }
 }
