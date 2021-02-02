@@ -13,8 +13,8 @@
 
 <ion-content>
   <img src="{{event.eventImage}}" />
-  <ion-icon class="reactBtn" name="heart-outline" (click)="reactToEvent()" *ngIf="!isReacted"></ion-icon>
-  <ion-icon class="reactBtn" name="heart" *ngIf="isReacted"></ion-icon>
+  <ion-icon class="reactBtn" name="heart-outline"  *ngIf="!isReacted" (click)="reactToEvent()"></ion-icon>
+  <ion-icon class="reactBtn" name="heart" *ngIf="isReacted" (click)="unreactToEvent()"></ion-icon>
   <ion-card-content>
     {{event.eventDescription}}
   </ion-card-content>

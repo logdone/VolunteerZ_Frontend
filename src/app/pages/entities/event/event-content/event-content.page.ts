@@ -129,9 +129,31 @@ export class EventContentPage implements OnInit {
     let reaction = new Reaction();
     reaction.user = this.account;
     reaction.event = this.event;
-    this.reactionService.create(reaction).subscribe();
+    this.isReacted = true;
+    
+    this.reactionService.create(reaction).subscribe((data)=>{
+      this.event.reactions.push(data.body);
+
+    });
   }
 
+
+  unreactToEvent(){
+    let reactions = [];
+    this.event.reactions.forEach(r => {
+      if(r.user.login==this.account.login){
+        console.log("deleting reaction");
+        console.log(r);
+        this.reactionService.delete(r.id).subscribe();
+        this.isReacted = false;
+
+      }
+      else{
+        reactions.push(r);
+      }
+      this.event.reactions=[...reactions];
+    });
+  }
   async presentActionSheet() {
     let cssParticipant = "";
     let cssReport = "";
