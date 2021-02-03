@@ -9,9 +9,10 @@ import { filter, map } from 'rxjs/operators';
 import { Event } from 'src/app/pages/entities/event/event.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { ModalController } from '@ionic/angular';
-import { CreateEventPage } from './create-event/create-event.page';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapComponent } from 'src/app/home/create-event/map/map.component';
+import { CreateEventPage } from './create-event/create-event.page';
 
 @Component({
   selector: 'app-home',
@@ -21,21 +22,27 @@ import { MapComponent } from 'src/app/home/create-event/map/map.component';
 export class HomePage implements OnInit {
   account: Account;
   events: Event[];
+  eventUrl: string;
 
-  constructor(private geolocation: Geolocation, public modalCtrl: ModalController, private _clipboardService: ClipboardService,
-    private toastCtrl: ToastController, private eventService: EventService,
-    private navController: NavController, private accountService: AccountService,
-    private loginService: LoginService) {
+  constructor(
+    private geolocation: Geolocation,
+    public modalCtrl: ModalController,
+    private _clipboardService: ClipboardService,
+    private toastCtrl: ToastController,
+    private eventService: EventService,
+    private navController: NavController,
+    private accountService: AccountService,
+    private loginService: LoginService,
+    private socialSharing: SocialSharing
+  ) {
     this.events = [];
   }
-
-
 
   ngOnInit() {
     this.getGeolocation();
     this.accountService.identity().then((account) => {
       if (account === null) {
-        console.log("not logged in ");
+        console.log('not logged in ');
         this.goBackToHomePage();
       } else {
         this.account = account;
@@ -43,30 +50,31 @@ export class HomePage implements OnInit {
     });
   }
 
-
   public getGeolocation() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp.coords.latitude);
-      console.log(resp.coords.longitude);
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+    this.geolocation
+      .getCurrentPosition()
+      .then((resp) => {
+        console.log(resp.coords.latitude);
+        console.log(resp.coords.longitude);
+      })
+      .catch((error) => {
+        console.log('Error getting location', error);
+      });
   }
 
   navigateToEvent(id: number) {
     this.navController.navigateForward('/event-content/' + id);
   }
 
-  copyEventLocation(id: number) {
-    this._clipboardService.copy(location.origin + '/event-content/' + id);
-    this.presentToast();
+  copyEventLocation(event: Event) {
+    this.socialSharing.shareViaFacebook(event.title, event.eventImage, location.origin + '/event-content/' + event.id);
   }
 
   async presentToast() {
     const toast = await this.toastCtrl.create({
       message: 'Event Link Copied to Clipboard',
       duration: 1000,
-      position: 'middle'
+      position: 'middle',
     });
     toast.present();
   }
@@ -90,25 +98,19 @@ export class HomePage implements OnInit {
 
   participate(event: Event, $event: any) {
     if (!this.isParticipant(event)) {
-      this.eventService.participate(event.id, this.account.login).subscribe(
-        (response) => {
-          console.log("Participating");
-          console.log(response);
-          event = response.body;
-          this.loadAll();
-
-        }
-      );
-    }
-    else {
-      this.eventService.unparticipate(event.id, this.account.login).subscribe(
-        (response) => {
-          console.log("Unparticipating");
-          console.log(response);
-          event = response.body;
-          this.loadAll();
-        }
-      );
+      this.eventService.participate(event.id, this.account.login).subscribe((response) => {
+        console.log('Participating');
+        console.log(response);
+        event = response.body;
+        this.loadAll();
+      });
+    } else {
+      this.eventService.unparticipate(event.id, this.account.login).subscribe((response) => {
+        console.log('Unparticipating');
+        console.log(response);
+        event = response.body;
+        this.loadAll();
+      });
     }
     //($event.target as HTMLButtonElement).parentElement.setAttribute('disabled', 'true');
   }
@@ -147,8 +149,7 @@ export class HomePage implements OnInit {
   }
 
   async presentModal() {
-    //const modal = await this.modalCtrl.create({ component: CreateEventPage });
-    const modal = await this.modalCtrl.create({ component: MapComponent });
+    const modal = await this.modalCtrl.create({ component: CreateEventPage });
     modal.present();
   }
 }

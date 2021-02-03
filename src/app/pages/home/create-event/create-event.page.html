@@ -40,7 +40,8 @@
       </ion-item>
       <ion-item>
         <ion-label>Creation Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="creationDate" id="field_creationDate"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="creationDate" id="field_creationDate">
+        </ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>Event Date</ion-label>
@@ -51,12 +52,9 @@
         <ion-input type="number" name="maxNumberVolunteers" formControlName="maxNumberVolunteers"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Location</ion-label>
-        <ion-content padding>
+        <ion-item>
           <div id="map_canvas"></div>
-      </ion-content>
-      
-        <ion-input type="text" name="location"  formControlName="location">{{adress}}</ion-input>
+        </ion-item>
       </ion-item>
     </ion-list>
   </form>

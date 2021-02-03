@@ -45,16 +45,19 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-item class="ion-text-center" color="tertiary" *ngIf="isParticipant(event)" (click)="participate(event, $event)">
+          <ion-item class="ion-text-center" color="tertiary" *ngIf="isParticipant(event)"
+            (click)="participate(event, $event)">
             <ion-label>Remove participation</ion-label>
           </ion-item>
-          <ion-item class="ion-text-center" color="tertiary" *ngIf="!isParticipant(event)" (click)="participate(event, $event)">
+          <ion-item class="ion-text-center" color="tertiary" *ngIf="!isParticipant(event)"
+            (click)="participate(event, $event)">
             <ion-label>Participate</ion-label>
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item class="ion-text-center" color="light" (click)="copyEventLocation(event.id)">
-            <ion-label>Share</ion-label><ion-icon slot="end" name="share-social-outline"></ion-icon>
+          <ion-item class="ion-text-center" color="light" (click)="copyEventLocation(event)">
+            <ion-label>Share</ion-label>
+            <ion-icon slot="end" name="share-social-outline"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -64,7 +67,7 @@
 <!-- test commit-->
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="presentModal()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <ion-fab-button (click)="presentModal()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

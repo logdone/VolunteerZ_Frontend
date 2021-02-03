@@ -21,18 +21,15 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
       Environment.setEnv({
         // api key for server
-        'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyCYOxndf3H4qIK6LnoD7Pi6NrlfyreEeTk',
+        API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyCYOxndf3H4qIK6LnoD7Pi6NrlfyreEeTk',
 
         // api key for local development
-        'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyCYOxndf3H4qIK6LnoD7Pi6NrlfyreEeTk'
+        API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyCYOxndf3H4qIK6LnoD7Pi6NrlfyreEeTk',
       });
-
-
-
     });
     this.initTranslate();
   }
