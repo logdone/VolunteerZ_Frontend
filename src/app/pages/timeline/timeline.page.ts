@@ -15,7 +15,7 @@ import { Timeline } from './timeline';
 })
 export class TimelinePage implements OnInit {
   account: Account;
-  data : Observable<Timeline[]>;
+  data : Timeline[];
   constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService,private timelineService: TimelineService) {}
 
   ngOnInit() {
@@ -24,9 +24,71 @@ export class TimelinePage implements OnInit {
         this.goBackToHomePage();
       } else {
         this.account = account;
-        this.data = this.timelineService.getAllTimeline(this.account.login);
+        this.timelineService.getAllTimeline(this.account.login).subscribe((data) => {
+          this.data = data;
+        });
       }
     });
+  }
+
+  isUnreacted(action){
+    if (action == 'Unreacted '){
+      return true;
+    }
+  }
+
+  isReacted(action){
+    if (action == 'Reacted to '){
+      return true;
+    }
+  }
+
+  isUnparticipated(action){
+    if (action == 'Unparticipated to event '){
+      return true;
+    }
+  }
+
+  isParticipated(action){
+    if (action == 'Participated to event '){
+      return true;
+    }
+  }
+
+  isCreatedEvent(action){
+    if (action == 'Created event '){
+      return true;
+    }
+  }
+
+  isDeletedEvent(action){
+    if (action == 'Deleted event '){
+      return true;
+    }
+  }
+
+  isReportedEvent(action){
+    if (action == 'Reported event '){
+      return true;
+    }
+  }
+
+  isCreatedComment(action){
+    if (action == 'Commented '){
+      return true;
+    }
+  }
+
+  isReportedComment(action){
+    if (action == 'Reported comment '){
+      return true;
+    }
+  }
+
+  isDeletedComment(action){
+    if (action == 'Deleted comment '){
+      return true;
+    }
   }
 
   isAuthenticated() {

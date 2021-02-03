@@ -1,35 +1,53 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      {{ 'TAB2_TITLE' | translate }}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
 
-<!--   <ion-item *ngFor="let timeline of data | async;">
-    <ion-avatar slot="start">
-      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+  <ion-item *ngFor="let timeline of data">
+    <ion-avatar slot="start" *ngIf="isReacted(timeline.action)">
+      <ion-icon name="heart-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isUnreacted(timeline.action)">
+      <ion-icon name="heart-dislike-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isParticipated(timeline.action)">
+      <ion-icon name="person-add-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isUnparticipated(timeline.action)">
+      <ion-icon name="person-remove-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isReportedEvent(timeline.action)">
+      <ion-icon name="alert-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isReportedComment(timeline.action)">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isCreatedEvent(timeline.action)">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isDeletedEvent(timeline.action)">
+      <ion-icon name="remove-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isCreatedComment(timeline.action)">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-avatar>
+
+    <ion-avatar slot="start" *ngIf="isDeletedComment(timeline.action)">
+      <ion-icon name="remove-circle-outline"></ion-icon>
     </ion-avatar>
     <ion-label>
       {{timeline.time}}
       <p>{{timeline.action}} {{timeline.targetObject}}</p>
-      <p></p>
-
     </ion-label>
-  </ion-item> -->
+  </ion-item>
 
-  <p-timeline [value]="data | async">
-    <ng-template pTemplate="content" let-timeline>
-      <small class="p-text-secondary">{{timeline.time}}</small>
-    </ng-template>
-    <ng-template pTemplate="opposite" let-timeline>
-      {{timeline.action}}
-    </ng-template>
-  </p-timeline>
-
-</ion-content> <!-- test commit-->
+</ion-content>
+<!-- test commit-->
