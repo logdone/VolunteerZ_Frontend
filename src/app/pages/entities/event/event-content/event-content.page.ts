@@ -3,7 +3,7 @@ import { EventService } from './../event.service';
 import { Comment } from './../../comment/comment.model';
 import { Event } from './../event.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { CommentService } from '../../comment/comment.service';
@@ -41,6 +41,7 @@ export class EventContentPage implements OnInit {
     private reactionService: ReactionService,
     private eventService: EventService,
     private toastCtrl: ToastController,
+    private router: Router,
     public actionSheetCtrl: ActionSheetController) { }
 
 
@@ -128,7 +129,7 @@ export class EventContentPage implements OnInit {
     this.presentToast();
   }
 
-  isOwner(comment : Comment){
+  isOwner(comment: Comment) {
     return comment.user.login == this.accountLoging;
   }
 
@@ -137,14 +138,14 @@ export class EventContentPage implements OnInit {
     reaction.user = this.account;
     reaction.event = this.event;
     this.isReacted = true;
-    
-    this.reactionService.create(reaction).subscribe((data)=>{
+
+    this.reactionService.create(reaction).subscribe((data) => {
       this.event.reactions.push(data.body);
 
     });
   }
 
-  deleteComment(comment:Comment,$event:any){
+  deleteComment(comment: Comment, $event: any) {
     this.commentService.delete(comment.id).subscribe();
     let indexComment = this.event.comments.indexOf(comment);
     console.log(indexComment);
@@ -152,57 +153,101 @@ export class EventContentPage implements OnInit {
     e.parentElement.parentElement.setAttribute("hidden", "true");
   }
 
-  unreactToEvent(){
+  unreactToEvent() {
     let reactions = [];
     this.event.reactions.forEach(r => {
-      if(r.user.login==this.account.login){
+      if (r.user.login == this.account.login) {
         console.log("deleting reaction");
         console.log(r);
         this.reactionService.delete(r.id).subscribe();
         this.isReacted = false;
 
       }
-      else{
+      else {
         reactions.push(r);
       }
-      this.event.reactions=[...reactions];
+      this.event.reactions = [...reactions];
     });
   }
   async presentActionSheet() {
     let cssParticipant = "";
     let cssReport = "";
+    let reportName = "Report";
+    let participateName = ""
+
 
     if (this.isParticipant) {
-      cssParticipant = "disabled-item"
-    }
-    if (this.isReported) {
-      cssReport = "disabled-item"
+      cssParticipant = "disabled-item";
     }
 
-    const actionSheet = this.actionSheetCtrl.create({
-      buttons: [
-        {
-          icon: 'add',
-          text: 'Participate',
-          role: 'participate',
-          cssClass: cssParticipant,
-          handler: () => {
-            this.eventService.participate(this.event.id, this.account.login).subscribe(() => window.location.reload());
-          }
-        },
-        {
-          icon: 'alert-circle-outline',
-          text: 'Report',
-          role: 'report',
-          cssClass: cssReport,
+    if (this.isOwner) {
+      cssParticipant = "hidden-item";
+      reportName = "delete";
+    }
+    else {
+      if (this.isReported) {
+        cssReport = "disabled-item"
+      }
+    }
+    let actionSheet;
+    if (!this.isOwner) {
+      actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            icon: 'add',
+            text: 'Participate',
+            role: 'participate',
+            cssClass: cssParticipant,
+            handler: () => {
 
-          handler: () => {
-            this.eventService.report(this.event.id, this.account.login).subscribe(() => window.location.reload());
+              this.eventService.participate(this.event.id, this.account.login).subscribe(() => window.location.reload());
+            }
+          },
+          {
+            icon: 'alert-circle-outline',
+            text: reportName,
+            role: 'report',
+            cssClass: cssReport,
 
+            handler: () => {
+              if (!this.isOwner) {
+                this.isReported = true;
+                this.eventService.report(this.event.id, this.account.login).subscribe();
+              }
+              else {
+                this.eventService.delete(this.event.id).subscribe(() => {
+                  this.router.navigateByUrl("/tabs/home");
+                });
+              }
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
+    }
+    else {
+      actionSheet = this.actionSheetCtrl.create({
+        buttons: [
+          {
+            icon: 'alert-circle-outline',
+            text: reportName,
+            role: 'report',
+            cssClass: cssReport,
+
+            handler: () => {
+              if (!this.isOwner) {
+                this.isReported = true;
+                this.eventService.report(this.event.id, this.account.login).subscribe();
+              }
+              else {
+                this.eventService.delete(this.event.id).subscribe(() => {
+                  this.router.navigateByUrl("/tabs/home");
+                });
+              }
+            }
+          }
+        ]
+      });
+    }
     (await actionSheet).present();
   }
 

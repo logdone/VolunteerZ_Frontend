@@ -97,6 +97,9 @@ export class HomePage implements OnInit {
   }
 
   participate(event: Event, $event: any) {
+    if (event.owner.login == this.account.login) {
+      ($event.target as HTMLButtonElement).parentElement.parentElement.setAttribute('visiblilty', 'true');
+    }
     if (!this.isParticipant(event)) {
       this.eventService.participate(event.id, this.account.login).subscribe((response) => {
         console.log('Participating');
