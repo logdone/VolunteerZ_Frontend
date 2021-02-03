@@ -79,7 +79,11 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end" *ngIf="!comment.isReported">
-        <ion-item-option color="danger" (click)="reportComment(comment.id)">Report
+        <ion-item-option color="danger" (click)="reportComment(comment.id)" *ngIf="!isOwner(comment)">Report
+          <ion-icon name="alert-circle-outline">
+          </ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="deleteComment(comment,$event)" *ngIf="isOwner(comment)">Delete
           <ion-icon name="alert-circle-outline">
           </ion-icon>
         </ion-item-option>

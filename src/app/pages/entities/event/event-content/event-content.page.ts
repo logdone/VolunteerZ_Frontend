@@ -14,6 +14,8 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { Account } from 'src/model/account.model';
 import { map } from 'rxjs/internal/operators/map';
 import { of } from 'rxjs/internal/observable/of';
+import { HttpResponse } from '@angular/common/http';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-content',
@@ -30,6 +32,7 @@ export class EventContentPage implements OnInit {
   isParticipant: boolean;
   isReported: boolean;
   reactionsCount: number;
+  accountLoging = "";
   constructor(
     private navController: NavController,
     private activatedRoute: ActivatedRoute,
@@ -53,6 +56,7 @@ export class EventContentPage implements OnInit {
           this.goBackToHomePage();
         } else {
           this.account = account;
+          this.accountLoging = this.account.login;
           console.log(this.account);
           console.log("Hello im in the last step");
           this.event.reactions.forEach(e => {
@@ -124,6 +128,9 @@ export class EventContentPage implements OnInit {
     this.presentToast();
   }
 
+  isOwner(comment : Comment){
+    return comment.user.login == this.accountLoging;
+  }
 
   reactToEvent() {
     let reaction = new Reaction();
@@ -137,6 +144,13 @@ export class EventContentPage implements OnInit {
     });
   }
 
+  deleteComment(comment:Comment,$event:any){
+    this.commentService.delete(comment.id).subscribe();
+    let indexComment = this.event.comments.indexOf(comment);
+    console.log(indexComment);
+    let e = $event.target as HTMLElement;
+    e.parentElement.parentElement.setAttribute("hidden", "true");
+  }
 
   unreactToEvent(){
     let reactions = [];
@@ -193,15 +207,6 @@ export class EventContentPage implements OnInit {
   }
 
   isAbleToReportComment(comment: Comment): boolean {
-    // return this.commentService.find(id).pipe(map((data)=>{
-    //   for(let r of data.body.commentReports){
-    //     if(this.account.login == r.login){
-    //       return true;
-    //     }
-    //   }
-    //   return false;
-    // }));
-
     for (let r of comment.commentReports) {
       if (this.account.login == r.login) {
         console.log("Already reported");
@@ -214,4 +219,33 @@ export class EventContentPage implements OnInit {
   reportComment(id) {
     this.commentService.report(id, this.account.login).subscribe();
   }
+
+
+
+
+
+  async loadAll(refresher?) {
+    this.eventService
+      .find(this.event.id)
+      .pipe(
+        filter((res: HttpResponse<Event>) => res.ok),
+        map((res: HttpResponse<Event>) => res.body)
+      )
+      .subscribe(
+        (response: Event) => {
+          this.event = response;
+          if (typeof refresher !== 'undefined') {
+            setTimeout(() => {
+              refresher.target.complete();
+            }, 750);
+          }
+        },
+        async (error) => {
+          console.error(error);
+          const toast = await this.toastCtrl.create({ message: 'Failed to load data', duration: 2000, position: 'middle' });
+          toast.present();
+        }
+      );
+  }
+
 }
