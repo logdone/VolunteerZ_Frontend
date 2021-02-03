@@ -16,6 +16,7 @@ import { EventContentPage } from './pages/entities/event/event-content/event-con
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
+import { TimelineModule } from 'primeng/timeline';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,6 +26,7 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent, EventContentPage],
   entryComponents: [],
   imports: [
+    TimelineModule,
     AvatarModule,
     AvatarGroupModule,
     BrowserModule,

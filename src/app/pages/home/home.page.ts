@@ -26,14 +26,11 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.accountService.identity().then((account) => {
-      console.log("not logged in ");
-
       if (account === null) {
         console.log("not logged in ");
         this.goBackToHomePage();
       } else {
         this.account = account;
-        console.log(account);
       }
     });
   }
@@ -43,7 +40,6 @@ export class HomePage implements OnInit {
   }
 
   copyEventLocation(id: number) {
-    console.log(location.origin + '/event-content/' + id);
     this._clipboardService.copy(location.origin + '/event-content/' + id);
     this.presentToast();
   }
@@ -74,26 +70,37 @@ export class HomePage implements OnInit {
     this.loadAll();
   }
 
-  participate(id: number) {
-    console.log("In participate");
-    this.eventService.participate(id, this.account.login).subscribe(
+  participate(event: Event, $event: any) {
+    if(!this.isParticipant(event)){
+    this.eventService.participate(event.id, this.account.login).subscribe(
       (response) => {
-        console.log("event with id " + response.body.title);
+        console.log("Participating");
+        console.log(response);
+        event=response.body;
+        this.loadAll();
+
       }
-
-
-    );
+    );}
+    else{
+      this.eventService.unparticipate(event.id, this.account.login).subscribe(
+        (response) => {
+          console.log("Unparticipating");
+          console.log(response);
+          event=response.body;
+        this.loadAll();
+        }
+      );
+    }
+    //($event.target as HTMLButtonElement).parentElement.setAttribute('disabled', 'true');
   }
 
   isParticipant(event: Event) {
     for (let i = 0; i < event.participants.length; i++) {
-      console.log(event.participants[i]);
       if (event.participants[i].login == this.account.login) {
-        console.log("You are participant in event " + event.title);
         return true;
       }
     }
-    return null;
+    return false;
   }
 
   async loadAll(refresher?) {
