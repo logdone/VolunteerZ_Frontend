@@ -1,4 +1,4 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/auth/account.service';
 import { LoginService } from 'src/app/services/login/login.service';
@@ -10,6 +10,8 @@ import { Event } from 'src/app/pages/entities/event/event.model';
 import { ClipboardService } from 'ngx-clipboard';
 import { ModalController } from '@ionic/angular';
 import { CreateEventPage } from './create-event/create-event.page';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MapComponent } from 'src/app/home/create-event/map/map.component';
 
 @Component({
   selector: 'app-home',
@@ -20,11 +22,17 @@ export class HomePage implements OnInit {
   account: Account;
   events: Event[];
 
-  constructor(public modalCtrl: ModalController, private _clipboardService: ClipboardService, private toastCtrl: ToastController, private eventService: EventService, public navController: NavController, private accountService: AccountService, private loginService: LoginService) {
+  constructor(private geolocation: Geolocation, public modalCtrl: ModalController, private _clipboardService: ClipboardService,
+    private toastCtrl: ToastController, private eventService: EventService,
+    private navController: NavController, private accountService: AccountService,
+    private loginService: LoginService) {
     this.events = [];
   }
 
+
+
   ngOnInit() {
+    this.getGeolocation();
     this.accountService.identity().then((account) => {
       if (account === null) {
         console.log("not logged in ");
@@ -32,6 +40,16 @@ export class HomePage implements OnInit {
       } else {
         this.account = account;
       }
+    });
+  }
+
+
+  public getGeolocation() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude);
+      console.log(resp.coords.longitude);
+    }).catch((error) => {
+      console.log('Error getting location', error);
     });
   }
 
@@ -71,23 +89,24 @@ export class HomePage implements OnInit {
   }
 
   participate(event: Event, $event: any) {
-    if(!this.isParticipant(event)){
-    this.eventService.participate(event.id, this.account.login).subscribe(
-      (response) => {
-        console.log("Participating");
-        console.log(response);
-        event=response.body;
-        this.loadAll();
+    if (!this.isParticipant(event)) {
+      this.eventService.participate(event.id, this.account.login).subscribe(
+        (response) => {
+          console.log("Participating");
+          console.log(response);
+          event = response.body;
+          this.loadAll();
 
-      }
-    );}
-    else{
+        }
+      );
+    }
+    else {
       this.eventService.unparticipate(event.id, this.account.login).subscribe(
         (response) => {
           console.log("Unparticipating");
           console.log(response);
-          event=response.body;
-        this.loadAll();
+          event = response.body;
+          this.loadAll();
         }
       );
     }
@@ -128,7 +147,8 @@ export class HomePage implements OnInit {
   }
 
   async presentModal() {
-    const modal = await this.modalCtrl.create({ component: CreateEventPage });
+    //const modal = await this.modalCtrl.create({ component: CreateEventPage });
+    const modal = await this.modalCtrl.create({ component: MapComponent });
     modal.present();
   }
 }
