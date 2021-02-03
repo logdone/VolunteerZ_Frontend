@@ -21,6 +21,7 @@ export class MapComponent implements OnInit {
   map: GoogleMap;
   address: string;
 
+
   constructor(
     public toastCtrl: ToastController,
     private platform: Platform
@@ -55,20 +56,31 @@ export class MapComponent implements OnInit {
       });
 
       //add a marker
-      let marker: Marker = this.map.addMarkerSync({
-        title: '@ionic-native/google-maps plugin!',
-        snippet: 'This plugin is awesome!',
-        position: location.latLng,
-        animation: GoogleMapsAnimation.BOUNCE
-      });
+      this.map.one(GoogleMapsEvent.MAP_READY)
+        .then(() => {
+          console.log('Map is ready!');
 
-      //show the infoWindow
-      marker.showInfoWindow();
+          this.map.addMarker({
+            title: 'Ionic',
+            icon: 'blue',
+            animation: 'DROP',
+            draggable: true,
+            position: location.latLng
+          })
+            .then(marker => {
+              marker.on(GoogleMapsEvent.MARKER_DRAG_END)
+                .subscribe(() => {
 
-      //If clicked it, display the alert
-      marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-        this.showToast('clicked!');
-      });
+                  let markerlatlong = marker.getPosition();
+                  console.log("Dragging marker");
+                  console.log(markerlatlong.lat);
+                  console.log(markerlatlong.lng);
+                  this.address = markerlatlong.lat + "/" + markerlatlong.lng;
+                });
+            });
+        });
+
+
 
       this.map.on(GoogleMapsEvent.MAP_READY).subscribe(
         (data) => {
@@ -81,6 +93,9 @@ export class MapComponent implements OnInit {
         this.showToast(err.error_message);
       });
   }
+
+
+
 
   async showToast(message: string) {
     let toast = await this.toastCtrl.create({
