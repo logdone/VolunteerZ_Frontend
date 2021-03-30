@@ -123,5 +123,4 @@ npm run e2e
 ```
 
 **Developed by**
-Bouchemi Firas
-Soltani Wassim
+Bouchemi Firas & Soltani Wassim
